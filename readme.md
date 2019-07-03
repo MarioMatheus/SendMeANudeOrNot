@@ -8,12 +8,12 @@ To classify an image, the app take a UIImage from camera or gallery of device an
 NudityBase predict function get an UIImage with parameter and returns your classification, 'NSFW' or 'SFW'.
 
 The UIImage is first resized and then converted to a CVPixelBuffer object to can be used by CoreML predict functions.
-```
+```swift
 guard let imageResized = imageWithImage(image: image, scaledToSize: CGSize(width: 224, height: 224)),
       let pixelBuffer = toCVPixelBuffer(image: imageResized) else { return nil }
 ```
 Then, the CVPixelBuffer object is used by Nudity CoreML model to classify the image.
-```
+```swift
 let nudity = Nudity()
 let output = try nudity.prediction(data: pixelBuffer)
 return (output.classLabel, output.prob[output.classLabel] ?? 50)
