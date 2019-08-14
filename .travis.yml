@@ -1,0 +1,6 @@
+os: osx
+language: objective-c
+osx_image: xcode10.3
+
+script:
+  - echo hello
