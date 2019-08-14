@@ -2,5 +2,32 @@ os: osx
 language: objective-c
 osx_image: xcode10.3
 
-script:
-  - echo hello
+jobs:
+  include:
+    - stage: compile
+      script: echo Compile Script
+
+    - stage: test
+      script: echo Test Script
+
+    - stage: deploy-testenv
+      if: branch = testenv
+      name: "Deploy to Test Environment"
+      script: skip
+      deploy:
+        provider: script
+        script: echo Test Environment Script
+        on:
+          branch: homolog
+          condition: $TRAVIS_BRANCH = testenv
+
+    - stage: deploy-production
+      if: branch = master
+      name: "Deploy to Production"
+      script: skip
+      deploy:
+        provider: script
+        script: echo Production Script
+        on:
+          branch: master
+          condition: $TRAVIS_BRANCH = master
